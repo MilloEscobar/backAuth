@@ -10,7 +10,7 @@ module.exports = {
                     var courseMap = {};
 
                     courses.forEach(function(course) {
-                      courseMap[user._id] = course;
+                      courseMap[course._id] = course;
                     }); 
                 res.send( {status : 'success', message: 'Courses Found',data:courses });
             }
