@@ -5,15 +5,13 @@ var router = function (nav) {
 
 	courseRouter.post('/', function (req, res) {
 		console.log("courseRouter: " , req.body)
-		var hello = coursesController.getAllCourses() + nav;
-		res.send(hello);
+		coursesController.createCourse(req, res);
 	});
 
 	courseRouter.get('/', function (req, res) {
 
 		console.log("courseRouter: " , req.body)
-		var hello = coursesController.getAllCourses() + nav;
-		res.send(hello);
+		coursesController.getAllCourses(req, res);
 		
 	});
 

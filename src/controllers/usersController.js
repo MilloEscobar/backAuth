@@ -15,8 +15,7 @@ module.exports = {
         var newUserData = req.body;
 
         if (newUserData.password !== newUserData.confirmPassword) {
-            req.session.error = 'Passwords do not match!';
-            res.redirect('/register');
+            res.send( {status : 'error', message:'Passwords do not match!'});
         }
 
         else {
@@ -24,8 +23,7 @@ module.exports = {
             newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
             usersData.createUser(newUserData, function (err, user) {
                 if (err) {
-                    req.session.error = 'Username exists!';
-                    res.redirect('/register');
+                    res.send( {status : 'error', message:'Username exists!'});
                     return;
                 }
 
@@ -36,7 +34,7 @@ module.exports = {
                     }
 
                     else {
-                        res.redirect('/');
+                        res.send( {status : 'success', message: 'User creation success'});
                     }
                 });
             });
@@ -51,16 +49,15 @@ module.exports = {
             }
 
             if (updatedUserData.password !== updatedUserData.confirmPassword) {
-                req.session.error = 'Passwords do not match!';
-                res.redirect('/profile');
+                res.send( {status : 'error', message:'Passwords do not match!'})
             } else {
                 usersData.updateUser({_id: req.body._id}, updatedUserData, function (err, user) {
-                    res.redirect('/profile');
+                    res.send( {status : 'success', message: 'User update success'});
                 })
             }
         }
         else {
-            res.send({reason: 'You do not have permissions!'})
+            res.send( {status : 'error', message: 'You dont have permissions'});
         }
     },
     getLogin: function (req, res, next) {

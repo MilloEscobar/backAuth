@@ -2,29 +2,50 @@ var coursesData = require('../data/coursesData');
 
 module.exports = {
     getAllCourses: function (req, res, next) {
-        return 'getAllCourses';
+        coursesData.getAllCourses(function (err, courses) {
+            if (err) {
+                res.send({status : 'error', message: 'Course Exists'});
+                return;
+            } else {
+                    var courseMap = {};
+
+                    courses.forEach(function(course) {
+                      courseMap[user._id] = course;
+                    }); 
+                res.send( {status : 'success', message: 'Courses Found',data:courses });
+            }
+        });
     },
     getCourse: function (req, res, next) {
-        return 'getCourse';
+        coursesData.getCourse(req.body , function (err, course) {
+            if (err) {
+                res.send({status : 'error', message: 'Course Exists'});
+                return;
+            } else {
+                res.send( {status : 'success', message: 'Course Found', data: course });
+            }
+        });
     },
-    createUser: function (req, res, next) {
-        return 'createUser';
+    createCourse: function (req, res, next) {
 
-        // var newCourseData = req.body;
+        var newCourseData = req.body;
 
-        // coursesData.createUser(newCourseData, function (err, user) {
-        //     if (err) {
-        //         req.session.error = 'Username exists!';
-        //         res.redirect('/register');
-        //         return;
-        //     }
-        // });
+        coursesData.createCourse(newCourseData, function (err, user) {
+            if (err) {
+                res.send({status : 'error', message: 'Course Exists'});
+                return;
+            } else {
+                res.send( {status : 'success', message: 'Course Created'});
+            }
+        });
     },
     updateCourse: function (req, res, next) {
-        return 'updateCourse ';
 
-        // coursesData.updateCourse({_id: req.body._id}, updatedUserData, function (err, user) {
-        //     res.redirect('/profile');
-        // })
+        coursesData.updateCourse({_id: req.body._id}, updatedUserData, function (err, user) {
+            if (err) {
+                res.send( {status : 'error', message: 'Course Update failed'});
+            }
+            res.send( {status : 'success', message: 'Course update success'});
+        })
     }
 };
