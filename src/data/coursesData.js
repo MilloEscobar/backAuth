@@ -12,6 +12,10 @@ module.exports = {
 		Course.update(query, course, callback);
 	},
 	getCourse : function function_name(course,callback) {
-		findOne({_id: course._id}, callback);
+		Course.findOne({_id: course._id}, callback);
+	},
+	getLastCourses: function (params, callback) {
+		let num = parseInt(params.params.num)
+		Course.find({},callback).sort({$natural:-1}).limit(num);
 	}
 };
