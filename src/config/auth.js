@@ -6,13 +6,12 @@ module.exports = {
         var auth = passport.authenticate('local', function(err, user) {
             if (err) return next(err);
             if (!user) {
-                req.session.error = 'Invalid Username or Password!';
-                res.redirect('/login');
+                res.send({status : 'error', message: 'Error logging'});
             }
 
             req.logIn(user, function(err) {
                 if (err) return next(err);
-                res.redirect('/');
+                res.send({status : 'success', message: 'Loggued', data: user});
             })
         });
 
@@ -20,7 +19,7 @@ module.exports = {
     },
     logout: function(req, res, next) {
         req.logout();
-        res.redirect('/');
+        res.send({status : 'success', message: 'Loggued Out'});;
     },
     isAuthenticated: function(req, res, next) {
         if (!req.isAuthenticated()) {

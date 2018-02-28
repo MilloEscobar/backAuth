@@ -23,7 +23,7 @@ module.exports = {
             newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
             usersData.createUser(newUserData, function (err, user) {
                 if (err) {
-                    res.send( {status : 'error', message:'Username exists!'});
+                    res.send( {status : 'error', message:err});
                     return;
                 }
 
@@ -34,7 +34,7 @@ module.exports = {
                     }
 
                     else {
-                        res.send( {status : 'success', message: 'User creation success'});
+                        res.send({status : 'success', message: 'User Created', data: user});
                     }
                 });
             });
@@ -70,9 +70,9 @@ module.exports = {
     },
     getProfile: function (req, res, next) {
         if (!req.user) {
-            res.redirect('/');
+            res.send( {status : 'error', message:'Not logged'})
         } else {
-            res.render('users/profile', {currentUser: req.user, userToUpdate: req.user});
+            res.send({status : 'success', message: 'Profile Success', data: req.user});
         }
     }
 };
