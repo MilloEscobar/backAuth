@@ -32,6 +32,8 @@ module.exports = {
     }
   },
   updateUser: function (req, res, next) {
+    console.log("req.body: ", req.body);
+    console.log('req.user: ', req.user);
 
     if (!req.user) {
       return res.send( {status : 'error', message: 'You dont have permissions'});
@@ -60,8 +62,9 @@ module.exports = {
           }
         }
       } else {
-
+        console.log("-************************fields to change: ",updatedUserData)
         usersData.updateUser({_id: req.body._id}, updatedUserData, function (err, user) {
+          console.log("-************************fields to change: ",user)
           res.send( {status : 'success', message: 'User update success'});
         });
       }

@@ -6,6 +6,6 @@ module.exports = {
   },
   
   updateUser: function (query, user, callback) {
-      User.update(query, user, callback);
+      User.updateOne(query, user, callback);
   }
 };

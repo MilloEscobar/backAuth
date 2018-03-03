@@ -10,14 +10,33 @@ module.exports.init = function () {
       hashPass: String,
       roles: [String],
       courses: [{
-        id: String,
-        step: Number,
-        answers:[{
-          step: Number,
-          answers: Number
-        }]
+          stepCurrent:Number,
+          questionNumber:Number,
+          id: { type: String, require: '{PATH} is required', unique: true },
+          name: String,
+          stepsTotal: Number,
+          steps:[{
+              info : String,
+              read : String,
+              questions:[{
+                      step: Number,
+                      question: String,
+                      answers: [{
+                                  number : Number,
+                                  answer: String,
+                                  correct: Boolean
+                              }]
+                      }],
+              }],
+          media: [{
+                name: String,
+                url: String
+              }],
+          level: String,
+          tags: [
+                  String
+              ]
       }],
-
   });
   
   userSchema.method({

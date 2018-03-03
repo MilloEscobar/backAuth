@@ -5,6 +5,7 @@ var routes = require('../routes');
 
 module.exports = function(app) {
     app.post('/login', auth.login);
+    app.post('/register', controllers.users.createUser);
     app.get('/logout', auth.logout);
     app.post('/userUpdate', controllers.users.updateUser);
 
