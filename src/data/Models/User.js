@@ -12,7 +12,7 @@ module.exports.init = function () {
       courses: [{
           stepCurrent:Number,
           questionNumber:Number,
-          id: { type: String, require: '{PATH} is required', unique: true },
+          id: String,
           name: String,
           stepsTotal: Number,
           steps:[{

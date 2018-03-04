@@ -1,76 +1,23 @@
-var encryption = require('../utilities/cripto'),
-  usersData = require('../data/usersData');
+var updateUser = require('./usersControllers/updateUser'),
+    userUpdatePassword = require('./usersControllers/userUpdatePassword'),
+    userUpdateCurses = require('./usersControllers/userUpdateCurses'),
+    userUpdateName = require('./usersControllers/userUpdateName'),
+    createUser = require('./usersControllers/createUser');
 
 module.exports = {
-  createUser: function (req, res, next) {
-    var newUserData = req.body;
-
-    if (newUserData.password !== newUserData.confirmPassword) {
-      res.send( {status : 'error', message:'Passwords do not match!'});
-    }
-
-    else {
-      newUserData.salt = encryption.generateSalt();
-      newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
-      usersData.createUser(newUserData, function (err, user) {
-        if (err) {
-          res.send( {status : 'error', message:err});
-          return;
-        }
-
-        req.logIn(user, function (err) {
-          if (err) {
-            res.status(400);
-            return res.send({reason: err.toString()});
-          }
-
-          else {
-            res.send({status : 'success', message: 'User Created', data: user});
-          }
-        });
-      });
-    }
+  createUser: function createUserFunc (req, res, next) {
+    createUser(req, res, next);
   },
-  updateUser: function (req, res, next) {
-    console.log("req.body: ", req.body);
-    console.log('req.user: ', req.user);
-
-    if (!req.user) {
-      return res.send( {status : 'error', message: 'You dont have permissions'});
-    }
-
-    if (req.user._id == req.body._id || req.user.roles.indexOf('admin') > -1) {
-      var updatedUserData = req.body;
-      if (updatedUserData.hasOwnProperty('password')) {
-
-        if (updatedUserData.newPassword !== updatedUserData.comfirmNewPassword) {
-          res.send( {status : 'error', message:'Passwords do not match!'});
-
-        } else {
-
-          let oldPass = encryption.generateHashedPassword(req.user.salt, updatedUserData.password);
-
-          if (req.user.hashPass === oldPass) {
-
-            let hashPass = encryption.generateHashedPassword(req.user.salt, updatedUserData.newPassword);
-            usersData.updateUser({_id: req.body._id}, {hashPass : hashPass}, function (err, user) {
-              res.send( {status : 'success', message: "User's password update success"});
-            });
-
-          } else {
-            res.send( {status : 'error', message:'Previous password incorrect'});
-          }
-        }
-      } else {
-        console.log("-************************fields to change: ",updatedUserData)
-        usersData.updateUser({_id: req.body._id}, updatedUserData, function (err, user) {
-          console.log("-************************fields to change: ",user)
-          res.send( {status : 'success', message: 'User update success'});
-        });
-      }
-
-    } else {
-      res.send( {status : 'error', message: 'You dont have permissions'});
-    }
-  }
+  updateUser: function updateUserFunc (req, res, next) {
+    updateUser(req, res, next);
+  },
+  userUpdatePassword: function userUpdatePasswordFunc (req, res, next) {
+    userUpdatePassword(req, res, next);
+  },
+  userUpdateCurses: function userUpdateCursesFunc (req, res, next) {
+    userUpdateCurses(req, res, next);
+  },
+  userUpdateName: function userUpdateNameFunc (req, res, next) {
+    userUpdateName(req, res, next);
+  },
 };
