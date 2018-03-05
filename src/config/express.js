@@ -47,7 +47,7 @@ module.exports = function(app, config) {
 
 });
 
-    app.use(session({secret: config.secret, resave: true, saveUninitialized: true}));
+    app.use(session({secret: config.secret, resave: true, rolling: true, cookie: { maxAge: 60000 }, saveUninitialized: true}));
 
     app.use(passport.initialize());
     app.use(passport.session());
