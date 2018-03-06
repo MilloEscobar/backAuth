@@ -6,6 +6,7 @@ var productSchema = new mongoose.Schema({
     format:String,
     price:Number,
     quantity:Number,
+    image: { type: String, default: 'neverborn' }
 });
 
 var Product = mongoose.model('Product', productSchema);
