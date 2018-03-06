@@ -5,6 +5,8 @@ var express = require('express'),
     auth = require('./auth'),
     passport = require('passport');
 
+var MongoStore = require('connect-mongo')(session);
+
 module.exports = function(app, config) {
     //app.set('view engine', '.ejs');
     app.set('view engine', 'jade');
@@ -56,7 +58,8 @@ module.exports = function(app, config) {
       resave: false, //don't save session if unmodified
       rolling: true, 
       cookie: { secure: false, maxAge: new Date(Date.now() + 36000000) }, 
-      saveUninitialized: true
+      saveUninitialized: true,
+      store : new MongoStore({url: config.db})
     }));
 
     app.use(passport.initialize());
