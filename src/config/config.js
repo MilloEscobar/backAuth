@@ -11,5 +11,11 @@ module.exports = {
         db: 'mongodb://'+ dbUser +':'+ dbPass +'@'+ dbEndpoint,
         port: process.env.PORT || 3000,
         secret: process.env.SECRET || "56950fe494af8e88204adf6d",
+    },
+    production: {
+        rootPath: rootPath,
+        db: 'mongodb://'+ dbUser +':'+ dbPass +'@'+ dbEndpoint,
+        port: process.env.PORT || 3000,
+        secret: process.env.SECRET || "56950fe494af8e88204adf6d",
     }
 };
