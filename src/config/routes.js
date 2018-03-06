@@ -14,6 +14,7 @@ module.exports = function(app) {
     app.use('/users', routes.usersRouter);
     app.use('/api/mail', routes.mailRouter);
     app.use('/api/course', routes.courseRouter);
+    app.use('/api/product', routes.productsRouter);
 
     // DEFAULT
     app.get('/', function (req, res) {
