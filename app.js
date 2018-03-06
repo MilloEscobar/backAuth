@@ -7,7 +7,7 @@ var env = process.env.NODE_ENV || 'development';
 var app = express();
 var config = require('./src/config/config')[env];
 
-console.log(config);
+console.log(process.env.NODE_ENV);
 
 require('./src/config/express')(app, config);
 require('./src/config/mongoose')(config);
