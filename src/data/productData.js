@@ -7,7 +7,9 @@ module.exports = {
 	createProduct: function (product, callback) {
 		Product.create(product, callback);
 	},
-
+	deleteProduct : function (product,callback) {
+		Product.remove({id: product.id}, callback);
+	},
 	updateProduct: function (query, product, callback) {
 		Product.update(query, product, callback);
 	},

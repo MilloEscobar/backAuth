@@ -11,6 +11,10 @@ var router = function (nav) {
 		productsController.getProduct(req, res);
 	});
 
+	productRouter.get('/delete/:id', function (req, res) {
+		productsController.deleteProduct(req, res);
+	});
+
 	productRouter.get('/', function (req, res) {
 		productsController.getAllProducts(req, res);	
 	});
